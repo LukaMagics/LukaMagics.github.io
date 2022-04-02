@@ -1,5 +1,5 @@
 ---
-title: "env_linux"
+title: "개발환경_Linux"
 layout: archive
 permalink: categories/env_linux
 author_profile: true

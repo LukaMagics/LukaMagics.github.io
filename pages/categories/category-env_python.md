@@ -1,5 +1,5 @@
 ---
-title: "ENV_Python"
+title: "개발환경_Python"
 layout: archive
 permalink: categories/env_python
 author_profile: true
