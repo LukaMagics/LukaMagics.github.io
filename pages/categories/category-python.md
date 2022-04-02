@@ -1,11 +1,11 @@
 ---
-title: "개발환경_Linux"
+title: "Python"
 layout: archive
-permalink: categories/env_linux
+permalink: categories/python
 author_profile: true
 sidebar_main: true
 ---
 
 
-{% assign posts = site.categories.env_linux %}
+{% assign posts = site.categories.python %}
 {% for post in posts %} {% include archive-single2.html type=page.entries_layout %} {% endfor %}
