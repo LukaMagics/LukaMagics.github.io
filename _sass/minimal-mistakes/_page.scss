@@ -76,6 +76,7 @@ body {
   a {
     color: $text-color;
     text-decoration: none;
+    font-size: 1.4em;
   }
 
   & + .page__meta {
@@ -92,6 +93,7 @@ body {
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;
+    font-size: 1.3em;
   }
 
 	h1, h2, h3, h4, h5, h6 {
