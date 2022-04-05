@@ -439,10 +439,19 @@
 
 .nav__list .nav__items {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.8rem;
+  margin-top: 1em;
 
   a {
     color: inherit;
+    font-family: 'Apple SD Gothic Neo','Nanum Gothic';
+    font-size: 1em;
+
+    &:hover {
+      color: #ef8f00;
+      font-weight: bolder;
+      outline: 0;
+    }
   }
 
   .active {
@@ -492,8 +501,8 @@
   display: block;
   margin: 0.5rem 0;
   padding: 0.25rem 0;
-  font-family: $sans-serif-narrow;
-  font-size: $type-size-6;
+  font-family: 'Apple SD Gothic Neo','Nanum Gothic';
+  font-size: 0.8em;
   font-weight: bold;
   text-transform: uppercase;
   border-bottom: 1px solid $border-color;

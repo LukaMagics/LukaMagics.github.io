@@ -203,6 +203,11 @@
   .author__urls {
     span.label {
       padding-left: 5px;
+      &:hover {
+        color: #ef8f00;
+        font-weight: bolder;
+        outline: 0;
+      }
     }
   }
 
@@ -319,7 +324,7 @@
     text-decoration: none;
 
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
   }
 }

@@ -29,15 +29,23 @@
   a[rel="permalink"] {
     position: static;
     color: #000;
+    font-size: 1.3em;
+    font-family: 'Apple SD Gothic Neo','Nanum Gothic';
+    &:hover {
+      color: #ef8f00;
+      font-weight: bolder;
+      outline: 0;
+    }
   }
 }
 
 .archive__subtitle {
-  margin: 1.414em 0 0.5em;
+  margin: 0em 0 0.8em;
   padding-bottom: 0.5em;
-  font-size: $type-size-5;
+  font-size: 1.6em;
   color: $muted-text-color;
   border-bottom: 1px solid $border-color;
+  font-family: 'Apple SD Gothic Neo','Nanum Gothic';
 
   + .list__item .archive__item-title {
     margin-top: 0.5em;
@@ -128,7 +136,7 @@
 .list__item {
   .page__meta {
     margin: 0 0 4px;
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
 }
 
