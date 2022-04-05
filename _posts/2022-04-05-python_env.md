@@ -23,7 +23,7 @@ last_modified_at: 2022-04-05
 
 <br>
 Python을 시작으로 프로그래밍을 처음 접하면 유튜브나 블로그에서 설명하는대로 Python을 위한 개발환경을 구축한다. Python만 설치할 수도 있고, Anaconda3를 설치하여 Python 및 자주 쓰이는 package를 설치할 수도 있다. 초기에는 별도의 설치가 필요없는 Python 내장 라이브러리만 사용하다가 시각화, 데이터 핸들링, 머신러닝 등의 작업을 위해 matplotlib, numpy, pandas, tensorflow, scikit learn 등 패키지를 설치 및 import하게 된다.<br>
-그러나 __개인이 만든 package나 tensorflow를 설치하기 시작하면 package 버전에 따른 호환성, 의존성 문제에 직면한다.__
+그러나 __개인이 만든 package나 tensorflow를 설치하기 시작하면 package 버전에 따른 상호간의 호환성, 의존성 문제에 직면한다.__
 <br>
 
 ## 1.1. 의존성(Dependency) 문제
@@ -47,14 +47,14 @@ Python을 시작으로 프로그래밍을 처음 접하면 유튜브나 블로�
 > 내가 이해하는대로 가상환경을 가장 쉽게 설명하면, PC에 별도의 폴더를 만드는 일과 비슷하다.<br>
 예를 들어, 우리는 학부수업을 들을 때 수업자료, 과제 등을 모아놓는 폴더를 만든다. 폴더에는 여러 개의 한글(hwp) 파일들이 들어있다.<br>
 개발을 위한 가상환경도 마찬가지다. 프로젝트마다 별도의 폴더를 만들어 코드 소스파일(.py)을 저장해둔다.<br>
-차이가 있다면, 학부수업 폴더의 .hwp 파일을 실행하려면 PC에 한글이 설치되어 있으면 PC전역에서 문제 없이 실행할 수 있다. 하지만, 개발을 위한 가상환경은 한글 프로그램의 버전을 달리하여 별도로 소프트웨어를 설치하는 것으로 비슷하다.<br>
+차이가 있다면, 학부수업 폴더의 .hwp 파일을 실행하려면 PC에 한글이 설치되어 있으면 PC전역에서 문제 없이 실행할 수 있다. 하지만, 개발을 위한 가상환경은 한글 프로그램의 버전을 달리하여 해당 프로젝트 폴더에 한번 더 설치해두는 것이라 비유할 수 있다.<br>
 **문제 없이 소스코드를 실행하기 위해서는 그에 맞는 버전의 <u>Interpreter</u>가 요구된다.**
 **Interpreter는 소스코드를 실행하는 환경으로 python, package 등의 버전을 포함한다.** 
 
 Python에서는 주로 가상환경 관리를 위해 **venv, virtualenv, conda, poetry** 등을 개별적으로 또는 조합하여 이용한다.
-- **venv** : Python 3.3부터 내장 모듈이 되어 별도 설치("pip install venv")없이 사용 가능 **(아래 virtualenv를 경량화한 모듈)**
+- **venv** : Python 3.3부터 내장 모듈이 되어 별도 설치없이 사용 가능 **(아래 virtualenv를 경량화한 모듈)**
 - **virtualenv** : pip install, conda install로 설치해야 함
-- **conda** : Anaconda3 설치 시 "conda create -n venv"와 같이 conda를 붙여 가상환경 생성 및 관리를 위한 command 사용.
+- **conda** : Anaconda3 설치 시 ```conda create -n venv```와 같이 conda를 붙여 가상환경 생성 및 관리를 위한 command 사용.
 - **poetry** : conda와 유사하지만 패키지 의존성 관리를 보다 자동화할 수 있음.<br>
 <br>
 
@@ -80,14 +80,25 @@ Python에서는 주로 가상환경 관리를 위해 **venv, virtualenv, conda, 
 **conda**는 venv와 달리 가상환경을 현재 폴더에 생성하지 않고 Anaconda 설치 폴더의 envs 안에 생성되기 때문에 디렉토리를 옮겨다닐 필요가 없다.
 <br>
 
-**conda로 Python 버전 지정하여 가상환경 생성**<br>
+**conda: Python 버전 지정하여 가상환경 생성**<br>
 ```
 > conda create -n [ENV_NAME] python=3.7
 ```
-**conda로 python 버전 변경**<br>
+**conda: python 버전 변경**<br>
 ```
 > conda install python=3.7
 ```
+
+**pyenv**는 Python 버전을 관리해주는 툴이며, 별도로 설치가 필요하다. **pyenv**는 새로운 Python 버전이 필요하면 cmd 창에서 바로 다운받고, 버전을 왔다갔다 전환할 수 있다.
+<br>
+
+**pyenv 설치 (cmd 창)**
+```
+pip install pyenv-win --target %USERPROFILE%\.pyenv 
+```
+target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때문에 사용자 폴더 내 설치해주자.
+
+<img src="./assets/images/pyenv_path.jpg" width="450px" height="300px" title="pyenv환경변수" alt="pyenv_path"></img><br/>
 
 <br>
 
