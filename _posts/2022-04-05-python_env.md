@@ -62,47 +62,78 @@ Python에서는 주로 가상환경 관리를 위해 **venv, virtualenv, conda, 
 
 - Python 버전에 의해 코드 실행 가능여부가 좌우될 수 있다.
 - VSCode 같은 편집기에서는 interpreter를 선택하여 소스코드를 컴파일할 환경을 선택한다.
-- 가상환경 이름이 "venv"라면 프로젝트 디렉토리 안에 ".venv" 디렉토리에 이 환경이 모두 구비되어 있어야 한다.
-- **"./.venv/Lib/site-packages"** 경로에 설치한 "패키지(numpy, pandas 등)"들이 있다. 
-- **"./.venv/Scripts"** 경로에 "python.exe"가 있다. 이 "python.exe" 파일의 버전이 Interpreter가 사용하는 python 버전이다. 
+- 가상환경 이름이 "venv"라면 프로젝트 디렉토리 안에 ".venv" 디렉토리에 이 환경이 모두 구비되어 있어야 한다.(단, conda와 같이 한 폴더에 가상환경이 모여있는 경우는 해당하지 않는다)
+- **"%나의프로젝트폴더%/.venv/Lib/site-packages"** 경로에 설치한 "패키지(numpy, pandas 등)"들이 있다. 
+- **"%나의프로젝트폴더%/.venv/Scripts"** 경로에 "python.exe"가 있다. 이 "python.exe" 파일의 버전이 Interpreter가 사용하는 python 버전이다. 
 
 - <span style="color:blue">Q. interpreter는 추가적으로 무엇이 있어야하고 어떻게 작동하는가?</span><br>
 - <span style="color:blue">Q. wheel.exe 파일도 있는데, 이것은 어떤 기능을 수행하는가?</span><br>
 - <span style="color:blue">Q. pip.exe도 있는데, 패키지들이 모여있는 site-package 에도 pip가 있다. pip는 conda처럼 command를 사용할 수 있는데 왜 패키지에도 있는가?</span><br>
+
+가상환경을 Interpreter로 활용하기 위해선 가상환경의 Python 버전과 packcage 버전 관리가 무엇보다 중요하다.<br>
+다음 챕터에서는 **"conda(+pip)"**와 **"pyenv+poetry"** 두 가지 방식에서 각각 가상환경을 생성하고 관리하는 방법을 다뤄보고자 한다.<br>
+- **"conda(+pip)"**: conda로 가상환경 생성, package 설치 및 의존성 관리/ pip로 conda에서 설치 불가한 package 설치
+- **"pyenv+poetry"**: pyenv로 Python 버전 관리 / poetry로 가상환경 생성, package 설치 및 의존성 관리
+> 개인적으로 conda(+pip)보다는 **"pyenv+poetry"** 조합을 추천한다. conda+poetry 조합을 사용하기도 하는데 어떤 이점이 있는지는 잘 모르겠다.
 <br>
 
-### 2.2.1 Python 버전 관리
+### 2.2.1 conda(+pip) 가상환경 생성
+<br>
+가상환경에서는 소스코드 실행에 필요한 Python 버전(python.exe)이 설치되어 있어야 한다.<br>
+Python 설치는 공식 홈페이지에서 직접 다운받을 수 있겠지만 번거롭기 때문에 주로 **conda나 pyenv**를 이용한다. (anaconda3 설치 시 Python 포함됨)<br>
+참고로, pip 명령어는 Python 2.7.9 이후 버전 또는 3.4 이후 버전에서 Python 설치 시 기본적으로 포함된다.<br>
+또한, conda 명령어는 anaconda3를 설치했으면 cmd나 conda prompt에서 사용할 수 있을 것이다.<br>
 
-- 가상환경마다 필요한 버전의 python.exe가 설치되어 있어야 한다.
-- Python 홈페이지에서 직접 다운받을 수 있지만 번거롭기 때문에 주로 **conda, pyenv**를 이용한다.
-- **conda** 명령어를 이용해 CLI 환경에서 가상환경을 생성할 때 Python 버전을 미리 지정해 설치할 수 있다. 가상환경을 생성할 때 python 버전을 지정안했다면 PC 전역에서 default (global)에 해당하는 Python 버전이 설치된다.
-
-**conda**는 venv와 달리 가상환경을 현재 폴더에 생성하지 않고 Anaconda 설치 폴더의 envs 안에 생성되기 때문에 디렉토리를 옮겨다닐 필요가 없다.
+- **conda** 명령어를 이용해 cmd 창에서 가상환경을 생성할 때 Python 버전을 미리 지정해 설치할 수 있다.
+- 가상환경을 생성할 때 python 버전을 지정안했다면 PC 전역에서 default (global)로 설정되어 있는 Python 버전으로 생성될 것이다.
+- **conda**는 venv와 달리 가상환경을 현재의 폴더(cmd에서 현재 경로)에 생성하지 않고 Anaconda 설치 폴더의 envs 안에 생성되기 때문에 디렉토리를 옮겨다닐 필요가 없다.
 <br>
 
-**conda: Python 버전 지정하여 가상환경 생성**<br>
+**Python 버전을 지정하여 가상환경 생성(cmd 창에서 진행)**<br>
 ```
 > conda create -n [ENV_NAME] python=3.7
 ```
-**conda: python 버전 변경**<br>
+
+**혹시나 기존 가상환경에 python 버전 변경(업/다운그레이드)하려면 아래 코드를 입력(py37 예시)**<br>
 ```
 > conda install python=3.7
 ```
 
-**pyenv**는 Python 버전을 관리해주는 툴이며, 별도로 설치가 필요하다. **pyenv**는 새로운 Python 버전이 필요하면 cmd 창에서 바로 다운받고, 버전을 왔다갔다 전환할 수 있다.
+**conda create로 생성한 가상환경에 패키지를 설치하려면 아래 코드로 가상환경을 먼저 활성화시켜줘야 한다.**
+
+```
+> conda activate [ENV_NAME]
+```
+
+- 이제 패키지를 설치해보자
+- Python의 package 설치 방식 중 가장 많이 사용하는 것이 pip install과 conda install일 것이다.
+- (윈도우 OS 기준) cmd 창에서 다음 코드 중 하나를 실행하여 설치한다.
+
+1.  ```pip install [PACKAGE_NAME]```
+2.  ```conda install [PACKAGE_NAME]```
+
+둘의 차이, pip3가 설치되는 경로와 위험성, conda 패키지 관리 팁
+
+### 2.2.2 pyenv+poetry 가상환경 생성 (설치 포함)
+
 <br>
+
+<br>
+
+**pyenv**는 Python 버전을 관리해주는 툴이며, 별도로 설치가 필요하다. pyenv는 새로운 Python 버전이 필요하면 cmd 창에서 바로 다운받고, 버전을 왔다갔다 전환할 수 있다.
 
 **pyenv 설치 (cmd 창)**
 ```
 pip install pyenv-win --target %USERPROFILE%\.pyenv 
 ```
-target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때문에 사용자 폴더 내 설치해주자.
+target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때문에 사용자 폴더 내 설치해주자.<br>
+그 다음엔 **"고급 시스템 설정 보기 - 고급 - 환경변수 - 시스템 변수(S) - 새로 만들기"**로 사진과 같이 아래 두 경로를 환경변수에 추가해준다.
 
-<img src="./assets/images/pyenv_path.jpg" width="450px" height="300px" title="pyenv환경변수" alt="pyenv_path"></img><br/>
+<img src="/assets/images/pyenv_path.JPG" width="450px" height="300px">
 
-<br>
+**C:\users\%USERPROFILE%\.pyenv\pyenv-win\bin**
+**C:\users\%USERPROFILE%\.pyenv\pyenv-win\shims**
 
-### 2.2.2 패키지 의존성 관리
-<br>
-pip 파이썬 2.7.9 이후 버전과 파이썬 3.4 이후 버전은 pip를 기본적으로 포함한다.
+이제 poetry로 가상환경을 생성할텐데, 그 전에 pyenv로 global Python 버전을 설정해줘야한다.
+
 <br>
