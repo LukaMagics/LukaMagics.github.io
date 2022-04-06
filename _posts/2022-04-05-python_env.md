@@ -72,9 +72,9 @@ Python에서는 주로 가상환경 관리를 위해 **venv, virtualenv, conda, 
 
 가상환경을 Interpreter로 활용하기 위해선 가상환경의 Python 버전과 packcage 버전 관리가 무엇보다 중요하다.<br>
 다음 챕터에서는 **"conda(+pip)"**와 **"pyenv+poetry"** 두 가지 방식에서 각각 가상환경을 생성하고 관리하는 방법을 다뤄보고자 한다.<br>
-- **"conda(+pip)"**: conda로 가상환경 생성, package 설치 및 의존성 관리/ pip로 conda에서 설치 불가한 package 설치
-- **"pyenv+poetry"**: pyenv로 Python 버전 관리 / poetry로 가상환경 생성, package 설치 및 의존성 관리
-> 개인적으로 conda(+pip)보다는 **"pyenv+poetry"** 조합을 추천한다. conda+poetry 조합을 사용하기도 하는데 어떤 이점이 있는지는 잘 모르겠다.
+- **"conda(+pip)"**: conda = 가상환경 생성, package 설치 및 의존성 관리 / pip = conda에서 설치 불가한 package 설치
+- **"pyenv+poetry"**: pyenv = Python 버전 관리 / poetry = 가상환경 생성, package 설치 및 의존성 관리
+> 개인적으로 conda(+pip)보다는 **"pyenv+poetry"** 조합을 추천한다. (conda+poetry 조합을 사용하기도 하는데 어떤 이점이 있는지는 잘 모르겠다)
 <br>
 
 ### 2.2.1 conda(+pip) 가상환경 생성
@@ -107,19 +107,44 @@ Python 설치는 공식 홈페이지에서 직접 다운받을 수 있겠지만 
 
 - 이제 패키지를 설치해보자
 - Python의 package 설치 방식 중 가장 많이 사용하는 것이 pip install과 conda install일 것이다.
-- (윈도우 OS 기준) cmd 창에서 다음 코드 중 하나를 실행하여 설치한다.
+- (윈도우 OS 기준) cmd 창에서 다음 코드 중 하나를 실행하여 원하는 package를 설치한다.
 
 1.  ```pip install [PACKAGE_NAME]```
 2.  ```conda install [PACKAGE_NAME]```
 
-둘의 차이, pip3가 설치되는 경로와 위험성, conda 패키지 관리 팁
+pip install과 conda install은 많이 다르기 때문에 주의해서 사용해야 한다.<br>
+아래는 둘의 특징과 차이를 정리하였다.
 
-### 2.2.2 pyenv+poetry 가상환경 생성 (설치 포함)
+**pip install와 conda install의 특징 및 차이점**
+- pip는 Python의 package만을 관리할 수 있지만, conda는 Python, java, C 등 conda가 관리하는 package라면 개발언어에 상관없이 관리할 수 있다(language-agnostic).
+- package <u>의존성 관리 측면에서 conda가 훨씬 낫다</u>. 설치하려는 package가 Python뿐만 아니라 다른 language를 포함하고 있다면 pip에서 에러가 발생할 수 있다.
+- 특히, C 언어가 포함된 소스코드나 Mac OS(또는 Linux) 환경에서 만들어진 코드를 Windows OS에서 설치하고 Import할 때 에러가 자주 발생한다.
+- pip는 Pypi서버에서 최신 패키지가 바로 업로드되기 때문에 <u>pip install로 거의 모든 package를 설치할 수 있다</u>. 
+- 그러나 conda는 의존성을 검증하여 Anaconda repository & Anaconda Cloud에 업로드된 package를 지원하기 떄문에 <u>개인이 만든 또는 마이너한 package는 conda install로 설치하지 못할 수 있다</u>.
+- anaconda가 설치되어 있고(python이 anaconda에 포함되어 설치됐고 별도로 python을 설치안했을 경우), <u>가상환경을 activate했을 때 pip와 conda install의 패키지 설치 경로같다</u>.
+  - 참고: Anaconda 설치 시 <u>"all users" 선택했을 때 기준으로 "C:/ProgramData/Anaconda3" 경로</u> ("Just me"를 선택했다면 "C:/Users/%USER_NAME%/Anaconda3")
+  - (venv) **pip install**: C:/ProgramData/Anaconda3/envs/%ENV_NAME%/lib/site-packages
+  - (venv) **conda install**: C:/ProgramData/Anaconda3/envs/%ENV_NAME%/lib/site-packages
+  - (venv 없을 때) **pip install [PACKAGE_NAME]**: C:/ProgramData/Anaconda3/lib/site-packages
+  - (venv 없을 때) **conda install [PACKAGE_NAME]**: C:/ProgramData/Anaconda3/lib/site-packages<br>
 
+> 단, conda 안에 있는 pip로 package를 설치하지 않고 Python을 별도로 설치했을 떄 생긴 pip로 설치할 경우 경로는 다를 것이다. <br>
+또한 pip3 install ~ 을 할 경우 PC에 설치된 Python (3.0 version 이상) 경로에 설치되니 pip3는 사용하지 않아야 한다.
+ 
+package 의존성 관리를 잘하기 위해선 pip와 conda install의 차이를 알고 사용해야한다.<br>
+
+**의존성 관리를 위해 pip와 conda는 아래 규칙에 따라 사용하는 것이 좋다.** (**출처: [daewonyoon님](https://daewonyoon.tistory.com/311)**)
+1. ```conda install [PACKAGE_NAME]``` 으로 conda를 통해 설치할 수 있는지 확인
+2. ```conda install -c conda-forge [PACKAGE_NAME]```으로 설치. 1번은 conda의 default 채널에서 패키지를 내려받는 것으로 해당 채널에 패키지가 없으면 conda-forge 채널에서 찾아보는 것. daualt보다 최신의 package를 찾을 확률이 있으나 요새는 별로 차이가 없다고 한다.
+3. 검색창에 "anaconda + 패키지명"으로 검색, anaconda.org 사이트 페이지가 있고, 해당 페이지에서 소개하는 채널을 이용하여 설치. ```conda install -c [CHANNEL] [PACKAGE_NAME]``` 명령으로 설치한다.
+위 모든 것이 실패하였을 때에, pip install 한다.
+4. pip install 시 의존성에 의해 설치된 패키지들 중에 conda install 이 가능한 패키지가 있다면, pip uninstall 한 후에 conda install 로 다시 설치.
+5. 기본 환경인 **(base)**는 작업용으로 쓰지말고, ```conda create - n [ENV_NAME] python=[PYTHON_VERSION]```로 새 가상환경을 만들어 사용한다. 패키지끼리 충돌이 발생하였을 때에 테스트도 용이하고, 특정 패키지의 버전차이 테스트도 가능하고, 불가피하게 충돌되는 두가지 환경을 분리하여 작업환경을 설치할 수 있다.
+6. 추가적으로 package 버전 수정(update)이 필요하다면, pip를 사용한 다음에 다시 conda 를 사용하는 것보다 새 가상환경을 만들어 설치하는 것이 최선이다.
 <br>
 
+### 2.2.2 pyenv+poetry 가상환경 생성
 <br>
-
 **pyenv**는 Python 버전을 관리해주는 툴이며, 별도로 설치가 필요하다. pyenv는 새로운 Python 버전이 필요하면 cmd 창에서 바로 다운받고, 버전을 왔다갔다 전환할 수 있다.
 
 **pyenv 설치 (cmd 창)**
@@ -131,9 +156,23 @@ target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때
 
 <img src="/assets/images/pyenv_path.JPG" width="450px" height="300px">
 
-**C:\users\%USERPROFILE%\.pyenv\pyenv-win\bin**
+**C:\users\%USERPROFILE%\.pyenv\pyenv-win\bin** <br>
 **C:\users\%USERPROFILE%\.pyenv\pyenv-win\shims**
 
-이제 poetry로 가상환경을 생성할텐데, 그 전에 pyenv로 global Python 버전을 설정해줘야한다.
+이제 poetry로 가상환경을 생성할텐데, 그 전에 pyenv로 global(default)로 사용할 Python 버전을 설정해줘야한다.
 
+cmd 창에서 설치 가능한 Python 버전을 확인.
+```
+> pyenv install --list
+:: [Info] ::  Mirror: https://www.python.org/ftp/python
+2.4-win32
+2.4.1-win32
+2.4.2-win32
+2.4.3c1-win32
+2.4.3-win32
+2.4.4-win32
+2.5-win32
+...
+
+```
 <br>
