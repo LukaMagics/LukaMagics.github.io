@@ -140,11 +140,14 @@ package 의존성 관리를 잘하기 위해선 pip와 conda install의 차이�
 위 모든 것이 실패하였을 때에, pip install 한다.
 4. pip install 시 의존성에 의해 설치된 패키지들 중에 conda install 이 가능한 패키지가 있다면, pip uninstall 한 후에 conda install 로 다시 설치.
 5. 기본 환경인 **(base)**는 작업용으로 쓰지말고, ```conda create - n [ENV_NAME] python=[PYTHON_VERSION]```로 새 가상환경을 만들어 사용한다. 패키지끼리 충돌이 발생하였을 때에 테스트도 용이하고, 특정 패키지의 버전차이 테스트도 가능하고, 불가피하게 충돌되는 두가지 환경을 분리하여 작업환경을 설치할 수 있다.
-6. 추가적으로 package 버전 수정(update)이 필요하다면, pip를 사용한 다음에 다시 conda 를 사용하는 것보다 새 가상환경을 만들어 설치하는 것이 최선이다.
+6. 추가적으로 package 버전 수정(update)이 필요하다면, pip를 사용한 다음에 다시 conda 를 사용하는 것보다 새 가상환경을 만들어 설치하는 것이 최선이다.<br>
 <br>
+
 
 ### 2.2.2 pyenv+poetry 가상환경 생성
 <br>
+Windows 환경에서 **pyenv**과 **poetry**의 설치부터 가상환경 생성하는 방법을 정리하였다. <u>현재 Anaconda를 설치하지 않았거나 삭제한 상태다.</u> 
+
 **pyenv**는 Python 버전을 관리해주는 툴이며, 별도로 설치가 필요하다. pyenv는 새로운 Python 버전이 필요하면 cmd 창에서 바로 다운받고, 버전을 왔다갔다 전환할 수 있다.
 
 **pyenv 설치 (cmd 창)**
@@ -161,7 +164,7 @@ target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때
 
 이제 poetry로 가상환경을 생성할텐데, 그 전에 pyenv로 global(default)로 사용할 Python 버전을 설정해줘야한다.
 
-cmd 창에서 설치 가능한 Python 버전을 확인.
+**cmd 창에서 설치 가능한 Python 버전을 확인.**
 ```
 > pyenv install --list
 :: [Info] ::  Mirror: https://www.python.org/ftp/python
@@ -175,4 +178,123 @@ cmd 창에서 설치 가능한 Python 버전을 확인.
 ...
 
 ```
+
+**원하는 version의 Python 설치**
+
+```
+pyenv install [PYTHON_VERSION] # [PYTHON_VERSION] 예시 = 3.8.0 
+```
+
+**설치된(사용 가능한) Python 버전 확인(예시)**
+
+```
+> pyenv versions
+* 3.7.8 (set by C:\Users\%USER_NAME%\.pyenv\pyenv-win\version) # 현재 기본으로 설정된 버전
+  3.8.0
+```
+
+
+**원하는 Python 버전을 PC의 기본 값으로 선택**
+
+```
+pyenv global [PYTHON_VERSION] # 작성자는 3.8.0 으로 입력
+```
+
+**현재 사용 중인 파이썬 버전만 확인할 때(versions -> version)**
+
+```
+> pyenv version
+3.8.0 (set by C:\Users\%USER_NAME%\.pyenv\pyenv-win\version)
+```
+
+이제 가상환경 및 패키지 관리를 할 수 있는 **poetry**를 설치한다.
+
+**poetry**는 cmd가 아닌 **window shell**을 켜서 아래 코드를 입력해준다.
+
+```
+(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+```
+
+혹시나 뭔가 잘못되어 **삭제하려면 위에서 --uninstall만 추가**하면 된다.
+
+```Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python - --uninstall```
+
+(참고: poetry가 윈도우에서 설치되는 경로는 "%USERPROFILE%\.poetry\bin")
+
+**이제 다시 cmd로 돌아와서** 가상환경(프로젝트 폴더)을 만드려면 경로로 이동(```cd [PATH]```)한다.
+
+**가상환경(프로젝트 폴더) 생성**
+
+```
+poetry new [PROJECT_NAME]  # 작성자의 [PROJECT_NAME] = poetry_test
+```
+
+경로에 프로젝트 폴더가 생성되었을 것이다.<br>
+생성된 폴더를 확인해보자. ```cd [PROJECT_NAME]```으로 해당 디렉토리로 이동하여 폴더 구조를 출력해주는 ```tree /f``` 입력.
+
+```
+> tree /f
+Folder PATH listing
+Volume serial number is AC3F-74F4
+C:.
+│   pyproject.toml
+│   README.rst
+│
+├───poetry_test
+│       __init__.py
+│
+└───tests
+        test_poetry_test.py
+        __init__.py
+```
+
+여러 init 파일과 몇몇 폴더가 생겼는데 필요하면 쓰면 된다. 중요한 **pyproject.toml** 파일은 남겨둔다.<br>
+이제 설치할 package를 ```poetry add``` 명령어로 설치해줄 것이다. <br>
+```poetry add```로 package를 추가하면 설치할 패키지의 의존성(Dependency)에 맞게 설치와 업데이트, 제거해야할 패키지의 정보를 검사 및 기록하고 package를 설치해준다. <br>
+이에 대한 모든 정보는 **pyproject.toml**과 add 후에 생기는 **poetry.lock** 파일에 기록되며, <u>pyproject.toml가 requirement.txt, setup.py 역할을 한다고 보면 된다.</u>
+
+**현재 cmd 내 경로가 프로젝트 폴더인지 한번 더 확인하고, 원하는 package를 add해준다** <br>
+**(작성자는 예시를 위해 pandas==1.2.0을 add)**
+
+```
+> poetry add "pandas == 1.2.0"  # 특정 버전 이상 설치 시 "pandas >= 1.2.0" 가능
+
+Updating dependencies
+Resolving dependencies...
+
+Writing lock file
+
+Package operations: 15 installs, 0 updates, 0 removals
+
+  • Installing pyparsing (3.0.7)
+  • Installing six (1.16.0)
+  • Installing atomicwrites (1.4.0)
+  • Installing attrs (21.4.0)
+  • Installing colorama (0.4.4)
+  • Installing more-itertools (8.12.0)
+  • Installing numpy (1.22.3)
+  • Installing packaging (21.3)
+  • Installing pluggy (0.13.1)
+  • Installing py (1.11.0)
+  • Installing python-dateutil (2.8.2)
+  • Installing pytz (2022.1)
+  • Installing wcwidth (0.2.5)
+  • Installing pandas (1.2.0)
+  • Installing pytest (5.4.3)
+```
+
+위와 같이 pandas==1.2.0을 설치하기 위해 필요한 설치, 수정, 제거 package 목록이 나타난다. (설치해야할 package가 15개로 나타났다.)
+
+이제 프로젝트 폴더를 확인해보면 구체적인 package, version, dependency가 기록된 **poetry.lock** 파일과 가상환경 **.venv**이 생겨났을 것이다.<br>
+**pyproject.toml** 및 **poetry.lock** 파일을 열어보면 모든 의존성 정보들이 기록된 것을 확인할 수 있다.<br>
+또한 **.venv/Lib** 안에 package가 설치되었고, **.venv/Scripts** 안에 (자신이 설정한 version의) **python.exe** 가 설치되었을 것이다.
+
+**<u>추가로, VSCode 편집기에서 해당 가상환경으로 작업하려면 아래 과정을 거치면 된다.</u>**
+
+1. VSCode에서 **프로젝트 폴더를 open** 해준다. ("File" > "Open file")
+2. **Interpreter**를 해당 가상환경으로 설정하기 위해 **Ctrl+Shift+p > "Python: Select Interpreter" 검색 및 클릭 > "Enter interpreter path" 클릭 > "Find..." 클릭** 후 아래 사진처럼 **python.exe**를 선택
+
+ <img src="/assets/images/poetry_vscode_interpreter.JPG" width="450px" height="300px">
+
+참고: poetry 명령어는 [poetry command](https://python-poetry.org/docs/cli/) 이 링크에서 확인할 수 있다.
 <br>
