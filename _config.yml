@@ -105,8 +105,8 @@ author:
   name             : "Oh, M. S."
   avatar           : "/assets/images/77_2.jpg"
   bio              : "Study Note for IT/AI"
-  location         : "Seoul, Korea"
-  email            : "opro1226@naver.com"
+  location         : "Seoul, Rep. of Korea"
+  email            : ""
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
