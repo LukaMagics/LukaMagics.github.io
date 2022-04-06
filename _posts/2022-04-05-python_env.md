@@ -292,9 +292,10 @@ Package operations: 15 installs, 0 updates, 0 removals
 **<u>추가로, VSCode 편집기에서 해당 가상환경으로 작업하려면 아래 과정을 거치면 된다.</u>**
 
 1. VSCode에서 **프로젝트 폴더를 open** 해준다. ("File" > "Open file")
-2. **Interpreter**를 해당 가상환경으로 설정하기 위해 **Ctrl+Shift+p > "Python: Select Interpreter" 검색 및 클릭 > "Enter interpreter path" 클릭 > "Find..." 클릭** 후 아래 사진처럼 **python.exe**를 선택
+2. **Interpreter**를 해당 가상환경으로 설정하기 위해 **Ctrl+Shift+p > "Python: Select Interpreter" 검색 및 클릭 > "Enter interpreter path" 클릭 > "Find..." 클릭** 후 아래 사진처럼 **"/.venv/Scripts/python.exe"**를 선택
 
-<center><img src="/assets/images/poetry_vscode_interpreter.JPG" width="1265px" height="711px"></center>
+
+<center><img src="/assets/images/poetry_vscode_interpreter2.png" width="1265px" height="711px"></center>
 
 참고: poetry 명령어는 [poetry command](https://python-poetry.org/docs/cli/) 이 링크에서 확인할 수 있다.
 <br>
