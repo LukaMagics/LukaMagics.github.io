@@ -169,7 +169,7 @@ pip install pyenv-win --target %USERPROFILE%\.pyenv
 target 다음엔 설치 경로입력. 환경변수를 추가해줘야 되기 때문에 사용자 폴더 내 설치해주자.<br>
 그 다음엔 **"고급 시스템 설정 보기 - 고급 - 환경변수 - 시스템 변수(S) - 새로 만들기"**로 사진과 같이 아래 두 경로를 환경변수에 추가해준다.
 
-<img src="/assets/images/pyenv_path.JPG" width="450px" height="300px">
+<img src="/assets/images/pyenv_path.jpg" width="450px" height="300px">
 
 **C:\users\%USERPROFILE%\.pyenv\pyenv-win\bin** <br>
 **C:\users\%USERPROFILE%\.pyenv\pyenv-win\shims**
