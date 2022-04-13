@@ -289,3 +289,10 @@ defaults:
       share: true
       related: true
       sidebar_main: true
+
+# Math equation
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
