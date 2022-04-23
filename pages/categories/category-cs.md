@@ -1,5 +1,5 @@
 ---
-title: "컴퓨터구조"
+title: "컴퓨터"
 layout: archive
 permalink: categories/cs
 author_profile: true
