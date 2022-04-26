@@ -54,7 +54,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "html" %}
-                        <li><a href="/categories/html" class="">HTML ({{category[1].size}})</a></li>
+                        <li><a href="/categories/html" class="">HTML/CSS ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
