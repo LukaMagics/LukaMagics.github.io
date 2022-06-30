@@ -29,14 +29,14 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "cs" %}
-                        <li><a href="/categories/cs" class="">컴퓨터 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/cs" class="">컴퓨터공학 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "bc" %}
-                        <li><a href="/categories/bc" class="">bc ({{category[1].size}})</a></li>
+                        <li><a href="/categories/bc" class="">블록체인 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
