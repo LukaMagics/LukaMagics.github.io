@@ -22,21 +22,21 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "ds" %}
-                        <li><a href="/categories/ds" class="">자료구조 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/ds" class="">Data Structure ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "cs" %}
-                        <li><a href="/categories/cs" class="">컴퓨터공학 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/cs" class="">Computer ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "bc" %}
-                        <li><a href="/categories/bc" class="">블록체인 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/bc" class="">Blockchain ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -44,6 +44,13 @@
                 {% for category in site.categories %}
                     {% if category[0] == "etc" %}
                         <li><a href="/categories/etc" class="">ETC ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "pj" %}
+                        <li><a href="/categories/project" class="">Project ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
